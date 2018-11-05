@@ -1,0 +1,21 @@
+/*
+** EPITECH PROJECT, 2018
+** mylib
+** File description:
+** tests file for err.c
+*/
+
+#include <criterion/criterion.h>
+#include "my.h"
+
+Test(err, empty, .exit_code = 0)
+{
+    char str = '';
+    cr_expect(err(str));
+    cr_expect(err(""));
+}
+
+Test(err, notempty, .exit_code = 84)
+{
+    cr_expect(err("lol idk"));
+}

@@ -1,0 +1,11 @@
+**/*.o
+**/*~
+**/#*#
+**/.#*
+**/*.gc*
+**/libmy.a
+unit_tests
+idk.cc
+tags
+**/*.out
+calc
