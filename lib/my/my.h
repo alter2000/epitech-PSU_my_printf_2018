@@ -89,7 +89,4 @@ void btree_apply_infix(btree_t *, long long int (*)(char *));
 void btree_insert_data(btree_t *, char *, int (*)());
 size_t btree_level_count(btree_t const *);
 
-int sum_stdarg(int, int, ...);
-int disp_stdarg(char *, ...);
-
 #endif // _MY_H_

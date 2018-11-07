@@ -15,11 +15,11 @@ int sum_stdarg(int i, int nb, ...)
     va_start(ap, nb);
     switch (i) {
         case 0:
-            for (; nb > 0; nb--)
+            while (nb--)
                 res += va_arg(ap, int);
             break;
         case 1:
-            for (; nb > 0; nb--)
+            while (nb--)
                 res += my_strlen(va_arg(ap, char *));
             break;
         default:

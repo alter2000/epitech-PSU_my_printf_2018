@@ -6,7 +6,7 @@
 ##
 
 CFLAGS=-Wall -Werror -I./
-SRC=$(wildcard *.c)
+SRC=$(shell find . -type f -name '*.c')
 OBJ=$(SRC:.c=.o)
 
 all: link
