@@ -5,14 +5,14 @@
 ** flag consumption funcs
 */
 
-char *get_flag(char *const *fmt, int *i)
+char *get_flag(char const *fmt, int *i)
 {
     char *flag = my_bzero(malloc(12), 12);
 
-    for (; *fmt[*i]; i++)
-        if (*fmt[*i] == '%')
-            for (unsigned int j = 0; !is_fmt(*fmt[*i]); j++, *i++)
-                flag[j] = *fmt[*i];
+    for (; fmt[*i]; i++)
+        if (fmt[*i] == '%')
+            for (unsigned int j = 0; !is_fmt(fmt[*i]); j++, *i++)
+                flag[j] = fmt[*i];
     return flag;
 }
 
