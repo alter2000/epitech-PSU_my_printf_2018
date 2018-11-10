@@ -12,25 +12,22 @@
 
 /* like UNIX permissions weeeee */
 
-#   define LEN_CHAR    (1U << 0U)
-#   define LEN_SHORT   (1U << 1U)
-#   define LEN_LONG    (1U << 2U)
-#   define LEN_LLONG   (1U << 3U)
-#   define LEN_IMAX    (1U << 4U)
-#   define LEN_SIZE    (1U << 5U)
-#   define LEN_PTRDIFF (1U << 6U)
-
-#   define FLAG_HASH      (1U << 7U)
-#   define FLAG_ZERO      (1U << 8U)
-#   define FLAG_LEFT      (1U << 9U)
-#   define FLAG_SPACE     (1U << 10U)
-#   define FLAG_SIGN      (1U << 11U)
-#   define FLAG_PRECISION (1U << 12U)
+#define FLAG_HASH      (1U <<  0U)
+#define FLAG_ZERO      (1U <<  1U)
+#define FLAG_LEFT      (1U <<  2U)
+#define FLAG_SPACE     (1U <<  3U)
+#define FLAG_PLUS      (1U <<  4U)
+#define FLAG_UPPER     (1U <<  5U)
+#define FLAG_CHAR      (1U <<  6U)
+#define FLAG_SHORT     (1U <<  7U)
+#define FLAG_LONG      (1U <<  8U)
+#define FLAG_LONG_LONG (1U <<  9U)
+#define FLAG_PRECISION (1U << 10U)
 
 // my_printf.c
 int my_printf(char const *fmt, ...);
 
-int pstuff(char const *fmt, char const **args, va_list ap);
+int pstuff(char const *fmt, char *buf, char const **args, va_list ap);
 
 // flags.c
 char *get_flag(char const *fmt, int *i);
