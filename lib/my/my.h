@@ -75,7 +75,8 @@ int max(int, int);
 void *my_memset(char *, short, size_t);
 void *my_bzero(char *, size_t);
 
-long long int my_atoll(char const *);
+int my_atoi(char const **);
+long long int my_atoll(char const **);
 
 typedef struct btree
 {

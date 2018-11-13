@@ -5,7 +5,18 @@
 ** atoi implementation
 */
 
-long long int my_atoll(char **s)
+#include "my.h"
+
+int my_atoi(char const **s)
+{
+    int nbr = 0;
+
+    for (;**s >= '0' && **s <= '9'; (*s)++)
+        nbr = nbr * 10 + (**s - '0');
+    return nbr;
+}
+
+long long int my_atoll(char const **s)
 {
     long long int nbr = 0;
 

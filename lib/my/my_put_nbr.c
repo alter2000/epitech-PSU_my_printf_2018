@@ -25,7 +25,6 @@ int my_put_nbr_base(int nb, char const *base)
     }
     if (nb >= 0 && nb < b)
         my_putchar(base[nb]);
-
     return nb;
 }
 

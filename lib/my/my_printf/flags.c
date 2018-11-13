@@ -5,50 +5,76 @@
 ** flag consumption funcs
 */
 
-char *get_flag(char const *fmt, int *i)
-{
-    char *flag = my_bzero(malloc(12), 12);
+#include "../my.h"
+#include "my_printf.h"
+#include <stdint.h>
 
-    for (; fmt[*i]; i++)
-        if (fmt[*i] == '%')
-            for (unsigned int j = 0; !is_fmt(fmt[*i]); j++, *i++)
-                flag[j] = fmt[*i];
-    return flag;
+/* absolutely no idea what ptrdiff_t is for */
+
+int set_flags(char const ch, unsigned int *flags)
+{
+    switch (ch) {
+        case '#':
+            *flags |= F_HASH;
+            return 1;
+        case '0':
+            *flags |= F_ZERO;
+            return 1;
+        case '-':
+            *flags |= F_LEFT;
+            return 1;
+        case ' ':
+            *flags |= F_SPACE;
+            return 1;
+        case '+':
+            *flags |= F_PLUS;
+            return 1;
+        default:
+            return 0;
+    }
 }
 
-unsigned int *count_flags(char const *fmt)
+char *set_length(char const *fmt, unsigned int *flags)
 {
-    unsigned int f = 0;
-
-    for (unsigned int i = 0; fmt[i]; i++)
-        f += (fmt[i] == '%' && fmt[i + 1] != '%');
-    return f;
+    switch (*fmt) {
+        case 'h' :
+            *flags |= F_SHORT;
+            if (*(++fmt) == 'h') {
+                *flags |= F_CHAR;
+                fmt++;
+            }
+            break;
+        case 'l' :
+            *flags |= F_LONG;
+            if (*(++fmt) == 'l') {
+                *flags |= F_LLONG;
+                fmt++;
+            }
+            break;
+        case 'j' :
+            *flags |= (sizeof(intmax_t) == sizeof(long)) ? F_LONG : F_LLONG;
+            fmt++;
+            break;
+        case 'z' :
+            *flags |= (sizeof(size_t) == sizeof(long)) ? F_LONG : F_LLONG;
+            fmt++;
+            break;
+        case 't' :
+            *flags |= (sizeof(ptrdiff_t) == sizeof(long)) ? F_LONG : F_LLONG;
+            fmt++;
+            break;
+        default:
+            break;
+    }
+    return fmt;
 }
 
-char **get_flags(char const *fmt)
+void fix_flags(unsigned int *flags)
 {
-    unsigned int fno = count_flags(fmt);
-    unsigned int j = 0;
-    char **flags = my_bzero(malloc(fno + 1), fno + 1);
-
-    for (unsigned int i = 0; fmt[i]; i++)
-        if (fmt[i] == '%')
-            flags[i] = get_flag(fmt, j);
-    return flags;
-}
-
-int is_fmt(char const ch)
-{
-    if (ch == 'd' || ch == 'i' || ch == 'u' || ch == 'o' || ch == 'x' \
-        || ch == 'X' || ch == 'c' || ch == 's' || ch == 'p')
-        return 1;
-    return 0;
-}
-
-int is_numeral(char const ch)
-{
-    if (ch == 'd' || ch == 'i' || ch == 'u' || ch == 'o' || ch == 'x' \
-        || ch == 'X')
-        return 1;
-    return 0;
+    if (*flags & F_PREC && *flags & F_ZERO)
+        *flags &= ~F_ZERO;
+    if (*flags & F_LEFT && *flags & F_ZERO)
+        *flags &= ~F_ZERO;
+    if (*flags & F_SPACE && *flags & F_PLUS)
+        *flags &= ~F_SPACE;
 }

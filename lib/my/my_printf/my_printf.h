@@ -11,29 +11,28 @@
 #include <stdarg.h>
 
 /* like UNIX permissions weeeee */
+#define F_HASH  (1U <<  0U)
+#define F_ZERO  (1U <<  1U)
+#define F_LEFT  (1U <<  2U)
+#define F_SPACE (1U <<  3U)
+#define F_PLUS  (1U <<  4U)
 
-#define FLAG_HASH      (1U <<  0U)
-#define FLAG_ZERO      (1U <<  1U)
-#define FLAG_LEFT      (1U <<  2U)
-#define FLAG_SPACE     (1U <<  3U)
-#define FLAG_PLUS      (1U <<  4U)
-#define FLAG_UPPER     (1U <<  5U)
-#define FLAG_CHAR      (1U <<  6U)
-#define FLAG_SHORT     (1U <<  7U)
-#define FLAG_LONG      (1U <<  8U)
-#define FLAG_LONG_LONG (1U <<  9U)
-#define FLAG_PRECISION (1U << 10U)
+#define F_UPPER (1U <<  5U)
+#define F_CHAR  (1U <<  6U)
+#define F_SHORT (1U <<  7U)
+#define F_LONG  (1U <<  8U)
+#define F_LLONG (1U <<  9U)
+#define F_PREC  (1U << 10U)
 
 // my_printf.c
-int my_printf(char const *fmt, ...);
+int my_printf(char const *, ...);
 
-int pstuff(char const *fmt, char *buf, char const **args, va_list ap);
+char *pstuff(char const*, char *, va_list);
+void fill_buffer(char const *, char const *, unsigned int, \
+        unsigned int, unsigned int, va_list);
 
-// flags.c
-char *get_flag(char const *fmt, int *i);
-unsigned int *count_flags(char const *fmt);
-char **get_flags(char const *fmt);
-int is_fmt(char const ch);
-int is_numeral(char const ch);
+char *set_length(char const*, unsigned int *);
+int set_flags(char, unsigned int *);
+void fix_flags(unsigned int *flags);
 
 #endif // MY_PRINTF_H
