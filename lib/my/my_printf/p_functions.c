@@ -69,3 +69,10 @@ unsigned int p_showptr(long long int p)
     }
     return c;
 }
+
+unsigned int p_putstr(char const *s, unsigned int flags)
+{
+    if (flags & F_SPACE && !s)
+        return my_putchar(' ');
+    return my_putstr(s);
+}

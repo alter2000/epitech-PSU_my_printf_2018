@@ -56,7 +56,7 @@ unsigned int put(char const **fmt, unsigned int flags, \
         case 'o': ++(*fmt); ch += p_oct(flags, width, prec, ap); break;
         case 'b': ++(*fmt); ch += p_bin(flags, width, prec, ap); break;
         case 'c': ++(*fmt); ch += my_putchar((char) va_arg(ap, int)); break;
-        case 's': ++(*fmt); ch += my_putstr(va_arg(ap, char *)); break;
+        case 's': ++(*fmt); ch += p_putstr(va_arg(ap, char *), flags); break;
         case 'S': ++(*fmt); ch += p_showstr(va_arg(ap, char *)); break;
         case 'p': ++(*fmt); ch += p_showptr(va_arg(ap, size_t)); break;
         case '%': ++(*fmt); ch += my_putchar('%'); break;
