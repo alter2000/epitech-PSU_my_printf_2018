@@ -12,19 +12,23 @@ unsigned int p_dec(unsigned int flags, unsigned int width, \
         unsigned int precision, va_list arg)
 {
     unsigned int chars = 0;
+    unsigned long long int val = 0;
 
-    flags &= ~F_HASH;
-    chars += (flags & F_SPACE) ? my_putchar(' ') : 0;
     if (flags & F_LLONG)
-        chars += p_putnbr(va_arg(arg, long long), "0123456789");
+        val = va_arg(arg, long long);
     else if (flags & F_LONG)
-        chars += p_putnbr(va_arg(arg, long), "0123456789");
+        val = va_arg(arg, long);
     else if (flags & F_CHAR)
-        chars += p_putnbr((char) va_arg(arg, int), "0123456789");
+        val = (char) va_arg(arg, int);
     else if (flags & F_SHORT)
-        chars += p_putnbr((short int) va_arg(arg, int), "0123456789");
+        val = (short int) va_arg(arg, int);
     else
-        chars += p_putnbr(va_arg(arg, int), "0123456789");
+        val = va_arg(arg, int);
+    if (flags & F_SPACE && val > 0)
+        chars += my_putstr(" ");
+    if (flags & F_PLUS && val > 0)
+        chars += my_putstr("+");
+    chars += p_putnbr(val, "0123456789");
     return chars;
 }
 
@@ -51,18 +55,21 @@ unsigned int p_hex(unsigned int flags, unsigned int width, \
         unsigned int precision, va_list arg)
 {
     unsigned int chars = 0;
+    unsigned long long int val = 0;
 
-    flags &= ~F_HASH;
     if (flags & F_LLONG)
-        chars += p_putnbr(va_arg(arg, long long), "0123456789abcdef");
+        val = va_arg(arg, long long);
     else if (flags & F_LONG)
-        chars += p_putnbr(va_arg(arg, long), "0123456789abcdef");
+        val = va_arg(arg, long);
     else if (flags & F_CHAR)
-        chars += p_putnbr((char) va_arg(arg, int), "0123456789abcdef");
+        val = (char) va_arg(arg, int);
     else if (flags & F_SHORT)
-        chars += p_putnbr((short int) va_arg(arg, int), "0123456789abcdef");
+        val = (short int) va_arg(arg, int);
     else
-        chars += p_putnbr(va_arg(arg, int), "0123456789abcdef");
+        val = va_arg(arg, int);
+    if (flags & F_HASH)
+        chars += my_putstr("0x");
+    chars += p_putnbr(val, "0123456789abcdef");
     return chars;
 }
 
@@ -70,17 +77,21 @@ unsigned int p_chex(unsigned int flags, unsigned int width, \
         unsigned int precision, va_list arg)
 {
     unsigned int chars = 0;
+    unsigned long long int val = 0;
 
     if (flags & F_LLONG)
-        chars += p_putnbr(va_arg(arg, long long), "0123456789ABCDEF");
+        val = va_arg(arg, long long);
     else if (flags & F_LONG)
-        chars += p_putnbr(va_arg(arg, long), "0123456789ABCDEF");
+        val = va_arg(arg, long);
     else if (flags & F_CHAR)
-        chars += p_putnbr((char) va_arg(arg, int), "0123456789ABCDEF");
+        val = (char) va_arg(arg, int);
     else if (flags & F_SHORT)
-        chars += p_putnbr((short int) va_arg(arg, int), "0123456789ABCDEF");
+        val = (short int) va_arg(arg, int);
     else
-        chars += p_putnbr(va_arg(arg, int), "0123456789ABCDEF");
+        val = va_arg(arg, int);
+    if (flags & F_HASH)
+        chars += my_putstr("0X");
+    chars += p_putnbr(val, "0123456789abcdef");
     return chars;
 }
 
@@ -88,16 +99,20 @@ unsigned int p_oct(unsigned int flags, unsigned int width, \
         unsigned int precision, va_list arg)
 {
     unsigned int chars = 0;
+    unsigned long long int val = 0;
 
     if (flags & F_LLONG)
-        chars += p_putnbr(va_arg(arg, long long), "01234567");
+        val = va_arg(arg, long long);
     else if (flags & F_LONG)
-        chars += p_putnbr(va_arg(arg, long), "01234567");
+        val = va_arg(arg, long);
     else if (flags & F_CHAR)
-        chars += p_putnbr((char) va_arg(arg, int), "01234567");
+        val = (char) va_arg(arg, int);
     else if (flags & F_SHORT)
-        chars += p_putnbr((short int) va_arg(arg, int), "01234567");
+        val = (short int) va_arg(arg, int);
     else
-        chars += p_putnbr(va_arg(arg, int), "01234567");
+        val = va_arg(arg, int);
+    if (flags & F_HASH && val == 0)
+        chars += my_putstr("0");
+    chars += p_putnbr(val, "01234567");
     return chars;
 }
