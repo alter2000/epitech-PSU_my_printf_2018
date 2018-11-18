@@ -11,6 +11,5 @@ int my_putchar(int const c)
 {
     if (!c)
         return 0;
-    write(1, &c, 1);
-    return c;
+    return write(1, &c, 1);
 }

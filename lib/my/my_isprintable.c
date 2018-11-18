@@ -9,7 +9,5 @@
 
 int my_isprintable(char const ch)
 {
-    if (ch < 32 || ch > 126)
-        return 0;
-    return 1;
+    return (ch < 32 || ch > 126) ? 0 : 1;
 }

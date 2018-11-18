@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2018
 ** CPool_Day03_2018
 ** File description:
-** print number on stdout
+** L24: if (nb >= 0 && nb < b)
 */
 
 #include "my.h"
@@ -18,12 +18,10 @@ int my_put_nbr_base(int nb, char const *base)
     if (nb < 0) {
         my_putchar('-');
         my_put_nbr_base(-nb, base);
-    }
-    if (nb > b - 1) {
+    } else if (nb > b - 1) {
         my_put_nbr_base(nb / b, base);
         my_put_nbr_base(nb % b, base);
-    }
-    if (nb >= 0 && nb < b)
+    } else
         my_putchar(base[nb]);
     return nb;
 }

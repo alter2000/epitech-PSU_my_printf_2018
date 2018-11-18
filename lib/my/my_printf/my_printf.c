@@ -11,72 +11,56 @@
 int my_printf(char const *fmt, ...)
 {
     va_list ap;
-    int chars = 0;
-    char *buf = 0;
+    int chars;
 
-    while (!buf)
-        buf = malloc(sizeof(char) * 9999999);
     va_start(ap, fmt);
-    pstuff(fmt, buf, ap);
+    chars = pstuff(fmt, ap);
     va_end(ap);
-    free(buf);
     return chars;
 }
 
-char *pstuff(char const *fmt, char *buf, va_list ap)
+int pstuff(char const *fmt, va_list ap)
 {
-    unsigned int flags = 0U;
-    unsigned int width;
-    unsigned int precision;
-    unsigned int pos = 0U;
-    unsigned char check = 0U;
+    unsigned int ch = 0;
 
-    while (*fmt) {
+    for (unsigned int flag = 0, chk = 0, prec = 0, width = 0; *fmt;) {
         if (*fmt != '%') {
-            buf[pos++] = *fmt++;
+            ch += my_putchar(*fmt++);
             continue;
         } else
             fmt++;
         do {
-            check = set_flags(*fmt, flags);
-            fmt += check;
-        } while (check);
+            chk = set_flags(*fmt, &flag);
+            fmt += chk;
+        } while (chk);
         width = my_isdigit(*fmt) ? my_atoi(&fmt) : 0;
         if (*fmt == '.') {
-            flags |= F_PREC;
-            if (my_isdigit(*(++fmt)))
-                precision = my_atoi(&fmt);
+            prec = (my_isdigit(*++fmt)) ? my_atoi(&fmt) : 0;
         }
-        fmt = set_length(fmt, &flags);
-        fix_flags(&flags);
-        fill_buffer(buf, fmt, flags, width, precision, ap);
+        ch += put(setlen(&fmt, &flag), *fix_flags(&flag), width, prec, ap);
     }
+    return ch;
 }
 
-void fill_buffer(char const *buf, char const *fmt, unsigned int flags, \
+unsigned int put(char const **fmt, unsigned int flags, \
         unsigned int width, unsigned int prec, va_list ap)
 {
-    char *base;
+    unsigned int ch = 0;
 
-    switch (*fmt) {
+    switch (**fmt) {
         case 'd':
-        case 'i':
-        case 'u':
-            base = "0123456789";
-            flags = (flags & F_HASH) ? flags & ~F_HASH : flags & F_HASH;
-        case 'x':
-            base = "0123456789abcdef";
-        case 'X':
-            base = "0123456789ABCDEF";
-        case 'o':
-            base = "01234567";
-        case 'b':
-            base = "01";
-            break;
-        case 's':
-            break;
+        case 'i': ++(*fmt); ch += p_dec(flags, width, prec, ap); break;
+        case 'u': ++(*fmt); ch += p_udec(flags, width, prec, ap); break;
+        case 'x': ++(*fmt); ch += p_hex(flags, width, prec, ap); break;
+        case 'X': ++(*fmt); ch += p_chex(flags, width, prec, ap); break;
+        case 'o': ++(*fmt); ch += p_oct(flags, width, prec, ap); break;
+        case 'b': ++(*fmt); ch += p_bin(flags, width, prec, ap); break;
+        case 'c': ++(*fmt); ch += my_putchar((char) va_arg(ap, int)); break;
+        case 's': ++(*fmt); ch += my_putstr(va_arg(ap, char *)); break;
+        case 'S': ++(*fmt); ch += p_showstr(va_arg(ap, char *)); break;
+        case 'p': ++(*fmt); ch += p_showptr(va_arg(ap, size_t)); break;
+        case '%': ++(*fmt); ch += my_putchar('%'); break;
         default: break;
     }
-    if ((*fmt != 'i') && (*fmt != 'd'))
-        flags &= ~(F_PLUS | F_SPACE);
+    return ch;
 }

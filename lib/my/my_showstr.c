@@ -7,16 +7,20 @@
 
 #include "my.h"
 
-void my_showstr(char const *str)
+unsigned int my_showstr(char const *str)
 {
-    for (unsigned int i = 0; str[i]; i++) {
+    unsigned int i = 0;
+    unsigned int c = 0;
+
+    for (; str[i]; i++) {
         if (my_isprintable(str[i]))
-            my_putchar(str[i]);
+            c += my_putchar(str[i]);
         else {
             my_putchar('\\');
-            if (str[i] < 16)
-                my_putchar('0');
-            my_put_nbr_base(str[i], "0123456789abcdef");
+            if (str[i] < 8)
+                c += my_putchar('0');
+            c += my_put_nbr_base(str[i], "01234567");
         }
     }
+    return i + c;
 }

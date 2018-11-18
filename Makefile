@@ -13,6 +13,7 @@ all: lib
 
 debug:
 	@$(MAKE) -C ./lib/my debug
+	gcc idk.c -I./include -L./lib/my -lmy
 
 clean:
 	@rm -f $(OBJ)

@@ -45,7 +45,7 @@ char *my_strlowcase(char *);
 char *my_strcapitalize(char *);
 int my_strcmp(char const *, char const *);
 int my_strncmp(char const *, char const *, int);
-void my_showstr(char const *);
+unsigned int my_showstr(char const *);
 int my_show_word_array(char const **);
 
 char *my_strcat(char *, char const *);

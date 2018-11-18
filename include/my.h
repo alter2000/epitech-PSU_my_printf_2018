@@ -45,7 +45,7 @@ char *my_strlowcase(char *);
 char *my_strcapitalize(char *);
 int my_strcmp(char const *, char const *);
 int my_strncmp(char const *, char const *, int);
-void my_showstr(char const *);
+unsigned int my_showstr(char const *);
 int my_show_word_array(char const **);
 
 char *my_strcat(char *, char const *);
@@ -75,7 +75,8 @@ int max(int, int);
 void *my_memset(char *, short, size_t);
 void *my_bzero(char *, size_t);
 
-long long int my_atoll(char const *);
+int my_atoi(char const **);
+long long int my_atoll(char const **);
 
 typedef struct btree
 {
@@ -88,8 +89,5 @@ btree_t *btree_create_node(char *);
 void btree_apply_infix(btree_t *, long long int (*)(char *));
 void btree_insert_data(btree_t *, char *, int (*)());
 size_t btree_level_count(btree_t const *);
-
-int sum_stdarg(int, int, ...);
-int disp_stdarg(char *, ...);
 
 #endif // _MY_H_
