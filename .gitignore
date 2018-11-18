@@ -5,6 +5,7 @@
 **/*.gc*
 **/libmy.a
 unit_tests
+idk.c
 idk.cc
 tags
 **/*.out
