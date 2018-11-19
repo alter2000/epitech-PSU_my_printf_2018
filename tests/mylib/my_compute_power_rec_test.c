@@ -3,8 +3,10 @@
 ** mylib
 ** File description:
 ** compute power tests
+*/
 
 
+/*
 #include <criterion/criterion.h>
 #include "my.h"
 

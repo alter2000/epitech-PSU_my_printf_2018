@@ -3,8 +3,9 @@
 ** CPool_infinadd_2018
 ** File description:
 ** count_digits tests
+*/
 
-
+/*
 #include "my.h"
 #include <criterion/criterion.h>
 
