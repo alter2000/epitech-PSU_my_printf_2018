@@ -17,7 +17,7 @@ unsigned int my_showstr(char const *str)
             c += my_putchar(str[i]);
         else {
             my_putchar('\\');
-            if (str[i] < 8)
+            if (str[i] < 16)
                 c += my_putchar('0');
             c += my_put_nbr_base(str[i], "01234567");
         }

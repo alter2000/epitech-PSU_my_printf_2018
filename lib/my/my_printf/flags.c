@@ -12,23 +12,17 @@
 int set_flags(char const ch, unsigned int *flags)
 {
     switch (ch) {
-        case '#':
-            *flags |= F_HASH;
-            return 1;
-        case '0':
-            *flags |= F_ZERO;
-            return 1;
-        case '-':
-            *flags |= F_LEFT;
-            return 1;
-        case ' ':
-            *flags |= F_SPACE;
-            return 1;
-        case '+':
-            *flags |= F_PLUS;
-            return 1;
-        default:
-            return 0;
+        case '#': *flags |= F_HASH;
+                return 1;
+        case '0': *flags |= F_ZERO;
+                return 1;
+        case '-': *flags |= F_LEFT;
+                return 1;
+        case ' ': *flags |= F_SPACE;
+                return 1;
+        case '+': *flags |= F_PLUS;
+                return 1;
+        default: return 0;
     }
 }
 
@@ -55,23 +49,20 @@ void check_ptr(char const **fmt, unsigned int *flags)
 char const **setlen(char const **fmt, unsigned int *flags)
 {
     switch (**fmt) {
-        case 'h' :
-            *flags |= F_SHORT;
-            if (*(++(*fmt)) == 'h') {
-                *flags |= F_CHAR;
-                (*fmt)++;
-            }
-            break;
-        case 'l' :
-            *flags |= F_LONG;
-            if (*(++(*fmt)) == 'l') {
-                *flags |= F_LLONG;
-                (*fmt)++;
-            }
-            break;
-        default:
-            check_ptr(fmt, flags);
-            break;
+        case 'h' : *flags |= F_SHORT;
+                if (*(++(*fmt)) == 'h') {
+                    *flags |= F_CHAR;
+                    (*fmt)++;
+                }
+                break;
+        case 'l' : *flags |= F_LONG;
+                if (*(++(*fmt)) == 'l') {
+                    *flags |= F_LLONG;
+                    (*fmt)++;
+                }
+                break;
+        default: check_ptr(fmt, flags);
+                break;
     }
     return fmt;
 }

@@ -35,7 +35,7 @@ unsigned int p_putnbr(long long int n, char const * const base)
     int b = my_strlen(base);
     unsigned int digits = 0;
 
-    if (n < INT_MIN + b + 1 || n > INT_MAX - b - 1) {
+    if (n < INT_MIN || n > INT_MAX) {
         write(2, "put_nbr: out of bounds\n", 23);
         return 0;
     }
