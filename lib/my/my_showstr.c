@@ -22,5 +22,5 @@ unsigned int my_showstr(char const *str)
             c += my_put_nbr_base(str[i], "01234567");
         }
     }
-    return i + c;
+    return c;
 }

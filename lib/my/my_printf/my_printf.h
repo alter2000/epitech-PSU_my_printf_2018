@@ -24,7 +24,7 @@
 #    define F_LLONG (1U <<  9U)
 
 #    define START_BITMASK_SWITCH(x) \
-    for (u_int64_t bit = 1; x >= bit; bit *= 2) if (x & bit) switch (bit)
+    for (size_t bit = 1; bit <= x; bit <<= 1) switch (bit)
 
 // my_printf.c
 int my_printf(char const *, ...);
